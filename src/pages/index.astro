@@ -1,0 +1,53 @@
+---
+import Layout from "../layouts/Layout.astro";
+import PokemonList from "../components/PokemonList";
+
+const f = await fetch("https://pokeapi.co/api/v2/pokemon?limit=151").then(
+  (res) => res.json()
+);
+const pokemons = f.results.map((pokemon, i) => ({
+  ...pokemon,
+  id: i + 1,
+  img: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${
+    i + 1
+  }.svg`,
+}));
+---
+
+<Layout title="Lista de pokemons">
+  <main>
+    <PokemonList pokemons={pokemons} />
+  </main>
+</Layout>
+
+<style is:global>
+  html,
+  body {
+    padding: 0;
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+      Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  main {
+  }
+
+  @media (prefers-color-scheme: dark) {
+    html {
+      color-scheme: dark;
+    }
+    body {
+      color: white;
+      background: black;
+    }
+  }
+</style>
